@@ -31,8 +31,13 @@ const NewProject = () => {
     };
 
     const handleGenerateProject = async () => {
-        const project = await generateProject();
-        form.setFieldsValue(project);
+        const generatedProject = await generateProject();
+        if (!generatedProject) return;
+
+        const technologies = generatedProject.technologies?.map((tech: any) => ({ value: tech, label: tech }));
+
+        form.setFieldsValue(generatedProject);
+        form.setFieldValue('technologies', technologies);
     }
 
     return (
