@@ -16,10 +16,12 @@ use App\Http\Controllers\Api\ProjectController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::get('/projects', [ProjectController::class, 'index']);
 
 Route::post('projects', [ProjectController::class, 'store']);
+
+Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);

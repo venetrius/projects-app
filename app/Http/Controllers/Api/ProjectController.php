@@ -9,6 +9,17 @@ use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
+
+    public function destroy(Project $project)
+    {
+        if($project->is_deleted) {
+            return response()->json($project);
+        }
+        
+        $project->delete();
+        return response()->json($project);
+    }
+
     public function index(Request $request)
     {
         // Retrieve the page and pageSize query parameters with default values
