@@ -22,11 +22,29 @@ class ProjectController extends Controller
 
     public function index(Request $request)
     {
-        // Retrieve the page and pageSize query parameters with default values
-        $page = $request->query('page', 1);
+        LOG::debug("Handling index project request");
         $pageSize = $request->query('pageSize', 5);
     
-        $projects = Project::paginate($pageSize, ['*'], 'page', $page);
+        // Start building the query
+        $query = Project::query();
+    
+        // Retrieve sorting parameters
+        $sortFields = $request->query('sortField', []);
+        $sortOrders = $request->query('sortOrder', []);
+        LOG::debug($sortFields);
+        LOG::debug($sortOrders);
+
+        $sortFields = is_array($sortFields) ? $sortFields : [$sortFields];
+        $sortOrders = is_array($sortOrders) ? $sortOrders : [$sortOrders];
+        
+        // Apply sorting if sortField and sortOrder are provided
+        foreach ($sortFields as $index => $field) {
+            $order = ($sortOrders[$index] ?? 'ascend') === 'descend' ? 'desc' : 'asc';
+            $query->orderBy($field, $order);
+        }
+
+        LOG::debug($query -> toSql());
+        $projects = $query->paginate($pageSize);
     
         return response()->json($projects);
     }
