@@ -1,5 +1,6 @@
 import React from 'react';
 import { API_URL } from '../../context/settings';
+import ProjectTable from '../../Components/Project/Table/Index';
 
 const Home: React.FC = () => {
     const [loading, setLoading] = React.useState<boolean>(true);
@@ -23,7 +24,7 @@ const Home: React.FC = () => {
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
-    return <div>{data}</div>;
+    return <div><ProjectTable /></div>;
 };
 
 export default Home;
