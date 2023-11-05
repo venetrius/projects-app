@@ -6,17 +6,20 @@ import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { columns } from './types';
 import { Link } from 'react-router-dom';
 
+// TODO should read query params from url and apply them to the table
 const ProjectTable: React.FC = () => {
-    const { projects, fetchProjects, pagination } = useProjectList();
+    const { projects, fetchProjects, pagination, sorters } = useProjectList();
     const { deleteProject } = useProject();
     const { current, pageSize } = pagination;
 
     useEffect(() => {
-        fetchProjects({ page: current, pageSize });
-    }, [fetchProjects, pagination.current, pagination.pageSize]);
+        fetchProjects({ page: current, pageSize, sorters });
+    }, []);
 
-    const handleTableChange = (params: any) => {
-        fetchProjects({ page: params.current, pageSize: params.pageSize });
+    const handleTableChange = (params: any, filters: any, sorter: any) => {
+        const sorters = Array.isArray(sorter) ? sorter : sorter.column ? [sorter] : [];
+        const sortCriteria = sorters.map(s => ({ field: s.field, order: s.order }));
+        fetchProjects({ page: params.current, pageSize: params.pageSize, sorters: sortCriteria });
     };
 
     const handleDelete = async (projectId: number) => {

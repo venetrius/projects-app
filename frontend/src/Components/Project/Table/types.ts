@@ -6,6 +6,9 @@ export const columns: ColumnsType<Project> = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
+        sorter: {
+            multiple: 1
+        }
     },
     {
         title: 'Description',
@@ -31,6 +34,9 @@ export const columns: ColumnsType<Project> = [
         title: 'Created At',
         dataIndex: 'created_at',
         key: 'created_at',
+        sorter: {
+            multiple: 2
+        },
     },
     {
         title: 'Updated At',
