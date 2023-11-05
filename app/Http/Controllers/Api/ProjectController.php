@@ -31,6 +31,27 @@ class ProjectController extends Controller
         return response()->json($projects);
     }
 
+    public function update(Request $request, Project $project) // The $project parameter is automatically resolved by Laravel.
+    {
+        Log::debug("Handling update project request");
+        Log::debug($request->all());
+    
+        $rules = [
+            'name' => 'required|max:255|unique:projects,name,' . $project->id,
+            'description' => 'required|max:2048',
+            'technologies' => 'required|array',
+            'expected_length' => 'required|min:3|max:255',
+        ];
+    
+        Log::debug("Validating request data");
+        $validatedData = $request->validate($rules);
+    
+        Log::debug("Updating project");
+        $project->update($validatedData);
+    
+        return response()->json($project);
+    }
+
     public function show($projectId)
     {
         LOG::debug("Handling show project request");
