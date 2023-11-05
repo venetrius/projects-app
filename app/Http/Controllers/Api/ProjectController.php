@@ -11,7 +11,12 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects = Project::all();
+        // Retrieve the page and pageSize query parameters with default values
+        $page = $request->query('page', 1);
+        $pageSize = $request->query('pageSize', 5);
+    
+        $projects = Project::paginate($pageSize, ['*'], 'page', $page);
+    
         return response()->json($projects);
     }
 
