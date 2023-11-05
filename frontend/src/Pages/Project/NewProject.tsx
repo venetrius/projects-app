@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Form, Input, Button, Typography } from 'antd';
+import { Form, Input, Button, Typography, Row, Col } from 'antd';
 import Select from "antd/es/select";
 import { ProjectForm } from '../../types';
 import { useProject } from '../../context/project';
 import { Link } from 'react-router-dom';
+import Header from '../../Components/Header';
 
 const { Title } = Typography;
 
@@ -42,16 +43,17 @@ const NewProject = () => {
 
     return (
         <div>
+            <Header />
             <Title>Create New Project</Title>
 
-            <br/>
+            <br />
             <Link to={'/'}>Back to projects</Link>
-            <br/><br/>
+            <br /><br />
 
             <Button type="primary" onClick={handleGenerateProject}>
-                Generate Project    
+                Generate Project
             </Button>
-            <br/>
+            <br />
 
             <Form
                 form={form}
@@ -59,7 +61,7 @@ const NewProject = () => {
                 onFinish={onFinish}
                 initialValues={{ is_active: false }}
                 labelCol={{ span: 4 }}
-                wrapperCol={{ span: 16 }} 
+                wrapperCol={{ span: 16 }}
             >
                 <Form.Item
                     label="Name"

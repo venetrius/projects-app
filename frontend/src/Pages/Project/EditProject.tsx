@@ -5,6 +5,7 @@ import { ProjectForm } from '../../types';
 import { useProject } from '../../context/project';
 import { Link, useParams } from 'react-router-dom';
 import { Typography } from 'antd';
+import Header from '../../Components/Header';
 
 const { Title } = Typography;
 
@@ -14,7 +15,7 @@ const EditProject = () => {
 
     const { id } = useParams<{ id: string }>();
     const projectId = Number(id);
-    
+
     useEffect(() => {
         fetchProject(projectId);
     }, [id, fetchProject]);
@@ -34,6 +35,7 @@ const EditProject = () => {
 
     return (
         <>
+            <Header />
             <Title>Edit Project</Title>
             <Link to={'/'}>Back to projects</Link>
             <Form
