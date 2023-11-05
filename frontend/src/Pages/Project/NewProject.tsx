@@ -33,7 +33,16 @@ const NewProject = () => {
     return (
         <div>
             <Title>Create New Project</Title>
+
+            <br/>
             <Link to={'/'}>Back to projects</Link>
+            <br/><br/>
+
+            <Button type="primary">
+                Generate Project    
+            </Button>
+            <br/>
+
             <Form
                 form={form}
                 name="newProject"
