@@ -3,8 +3,8 @@ import { ProjectListProvider } from './context/projectList';
 import { ProjectProvider } from './context/project';
 
 import Home from './Pages/Home';
-import EditProject from './Pages/EditProject';
-import NewProject from './Pages/NewProject';
+import EditProject from './Pages/Project/EditProject';
+import NewProject from './Pages/Project/NewProject';
 import { Col, Row } from 'antd';
 
 function App() {
