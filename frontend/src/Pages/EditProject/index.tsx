@@ -7,17 +7,24 @@ import { useParams } from 'react-router-dom';
 
 const EditProject = () => {
     const [form] = Form.useForm();
-    const { project, fetchProject } = useProject();
+    const { project, fetchProject, updateProject } = useProject();
 
     const { id } = useParams<{ id: string }>();
     const projectId = Number(id);
-    console.log({ id, projectId })
+    
     useEffect(() => {
         fetchProject(projectId);
     }, [id, fetchProject]);
 
     const onFinish = (values: any) => {
-        console.log({values})
+        const updatedProject: ProjectForm = {
+            name: values.name,
+            description: values.description,
+            expected_length: values.expected_length,
+            technologies: values.technologies.map((tech: any) => tech.value),
+        };
+
+        updateProject(projectId, updatedProject);
     };
 
     if (!project) return (<div>Loading...</div>);
