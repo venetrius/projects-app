@@ -4,13 +4,31 @@ import { useEffect } from 'react';
 import { columns } from './types';
 
 const ProjectTable: React.FC = () => {
-    const { projects, fetchProjects } = useProjectList();
+    const { projects, fetchProjects, pagination } = useProjectList();
+    const { current, pageSize } = pagination;
 
     useEffect(() => {
-        fetchProjects();
-    }, [fetchProjects]);
-
-    return <Table columns={columns} dataSource={projects} />;
-};
+        fetchProjects({page: current, pageSize});
+      }, [fetchProjects, pagination.current, pagination.pageSize]);
+      
+      const handleTableChange = (params: any) => {
+        fetchProjects({page: params.current, pageSize: params.pageSize});
+      };
+      
+      return (
+        <Table
+          columns={columns}
+          dataSource={projects}
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            total: pagination.total,
+            pageSizeOptions: ['3', '5', '10', '20'],
+            showSizeChanger : true,
+          }}
+          onChange={handleTableChange}
+        />
+      );
+        }
 
 export default ProjectTable;
