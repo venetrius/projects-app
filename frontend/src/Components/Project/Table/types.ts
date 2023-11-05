@@ -36,10 +36,5 @@ export const columns: ColumnsType<Project> = [
         title: 'Updated At',
         dataIndex: 'updated_at',
         key: 'updated_at',
-    },
-    {
-        title: 'Actions',
-        dataIndex: 'actions',
-        key: 'actions',
     }
 ];
