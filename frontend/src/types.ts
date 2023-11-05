@@ -8,3 +8,10 @@ export type Project = {
     technologies: string[];
     is_active: boolean;
 }
+
+export type ProjectForm = {
+    name: string;
+    description: string;
+    expected_length: string;
+    technologies: string[];
+}
