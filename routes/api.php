@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthController;
 
 
@@ -32,6 +32,8 @@ Route::get('/projects/{projectId}', [ProjectController::class, 'show']);
 Route::put('/projects/{project}', [ProjectController::class, 'update']);
 
 Route::post('/generateProject', [ProjectController::class, 'generate']);
+
+Route::get('/users', [UserController::class,'index']);
 
 // TODO should be in auth routes
 Route::post('/auth/register', [AuthController::class, 'register']);
