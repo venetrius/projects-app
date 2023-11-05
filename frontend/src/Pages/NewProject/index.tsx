@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Typography } from 'antd';
 import Select from "antd/es/select";
 import { ProjectForm } from '../../types';
 import { useProject } from '../../context/project';
+
+const { Title } = Typography;
 
 const NewProject = () => {
     const [form] = Form.useForm();
@@ -29,7 +31,7 @@ const NewProject = () => {
 
     return (
         <div>
-            <h1>Create New Project</h1>
+            <Title>Create New Project</Title>
             <Form
                 form={form}
                 name="newProject"

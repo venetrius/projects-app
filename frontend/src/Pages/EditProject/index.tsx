@@ -4,6 +4,9 @@ import Select from "antd/es/select";
 import { ProjectForm } from '../../types';
 import { useProject } from '../../context/project';
 import { useParams } from 'react-router-dom';
+import { Typography } from 'antd';
+
+const { Title } = Typography;
 
 const EditProject = () => {
     const [form] = Form.useForm();
@@ -30,8 +33,8 @@ const EditProject = () => {
     if (!project) return (<div>Loading...</div>);
 
     return (
-        <div>
-            <h1>Edit Project</h1>
+        <>
+            <Title>Edit Project</Title>
             <Form
                 form={form}
                 name="editProject"
@@ -85,7 +88,7 @@ const EditProject = () => {
                     </Button>
                 </Form.Item>
             </Form>
-        </div>
+        </>
     );
 };
 
