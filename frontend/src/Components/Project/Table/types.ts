@@ -19,6 +19,7 @@ export const columns: ColumnsType<Project> = [
         title: 'Technologies',
         dataIndex: 'technologies',
         key: 'technologies',
+        render : (props: string[]) =>  props.join(', '),
     },
     {
         title: 'Expected Length',
