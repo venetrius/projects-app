@@ -31,6 +31,14 @@ class ProjectController extends Controller
         return response()->json($projects);
     }
 
+    public function show($projectId)
+    {
+        LOG::debug("Handling show project request");
+        LOG::debug($projectId);
+        $project = Project::findOrFail($projectId);
+        return response()->json($project);
+    }
+
     public function store(Request $request)
     {
         Log::debug("Handling create project request");
