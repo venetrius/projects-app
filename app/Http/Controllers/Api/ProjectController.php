@@ -4,18 +4,28 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use OpenAI;
 
 class ProjectController extends Controller
 {
 
+    protected $projectService;
+
+    // Import the service and assign it to a property
+    public function __construct(ProjectService $projectService)
+    {
+        $this->projectService = $projectService;
+    }
+
     public function destroy(Project $project)
     {
-        if($project->is_deleted) {
+        if ($project->is_deleted) {
             return response()->json($project);
         }
-        
+
         $project->delete();
         return response()->json($project);
     }
@@ -24,10 +34,10 @@ class ProjectController extends Controller
     {
         LOG::debug("Handling index project request");
         $pageSize = $request->query('pageSize', 5);
-    
+
         // Start building the query
         $query = Project::query();
-    
+
         // Retrieve sorting parameters
         $sortFields = $request->query('sortField', []);
         $sortOrders = $request->query('sortOrder', []);
@@ -36,16 +46,16 @@ class ProjectController extends Controller
 
         $sortFields = is_array($sortFields) ? $sortFields : [$sortFields];
         $sortOrders = is_array($sortOrders) ? $sortOrders : [$sortOrders];
-        
+
         // Apply sorting if sortField and sortOrder are provided
         foreach ($sortFields as $index => $field) {
             $order = ($sortOrders[$index] ?? 'ascend') === 'descend' ? 'desc' : 'asc';
             $query->orderBy($field, $order);
         }
 
-        LOG::debug($query -> toSql());
+        LOG::debug($query->toSql());
         $projects = $query->paginate($pageSize);
-    
+
         return response()->json($projects);
     }
 
@@ -53,20 +63,20 @@ class ProjectController extends Controller
     {
         Log::debug("Handling update project request");
         Log::debug($request->all());
-    
+
         $rules = [
             'name' => 'required|max:255|unique:projects,name,' . $project->id,
             'description' => 'required|max:2048',
             'technologies' => 'required|array',
             'expected_length' => 'required|min:3|max:255',
         ];
-    
+
         Log::debug("Validating request data");
         $validatedData = $request->validate($rules);
-    
+
         Log::debug("Updating project");
         $project->update($validatedData);
-    
+
         return response()->json($project);
     }
 
@@ -89,13 +99,14 @@ class ProjectController extends Controller
             'technologies' => 'required|array',
             'expected_length' => 'required|min:3|max:255',
         ];
-        
+
         LOG::debug("Validating request data");
         $validatedData = $request->validate($rules);
 
         $defaultValues = [
             'isActive' => true,
-            'user_id' => 1, // TODO should read user from context after auth is implemented
+            'user_id' => 1,
+            // TODO should read user from context after auth is implemented
         ];
 
         Log::debug("Merging default values with validated request data");
@@ -107,5 +118,10 @@ class ProjectController extends Controller
 
         return response()->json($project);
     }
-    
+
+    public function generate()
+    {
+        $project = $this -> projectService -> generate();
+        return response()->json($project);
+    }
 }

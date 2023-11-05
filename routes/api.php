@@ -29,3 +29,5 @@ Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);
 Route::get('/projects/{projectId}', [ProjectController::class, 'show']);
 
 Route::put('/projects/{project}', [ProjectController::class, 'update']);
+
+Route::post('/generateProject', [ProjectController::class, 'generate']);
