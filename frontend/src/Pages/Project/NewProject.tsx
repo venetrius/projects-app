@@ -9,7 +9,7 @@ const { Title } = Typography;
 
 const NewProject = () => {
     const [form] = Form.useForm();
-    const { createProject } = useProject();
+    const { createProject, generateProject } = useProject();
     const [project, setProject] = useState<ProjectForm>({
         name: '',
         description: '',
@@ -30,6 +30,11 @@ const NewProject = () => {
         form.resetFields();
     };
 
+    const handleGenerateProject = async () => {
+        const project = await generateProject();
+        form.setFieldsValue(project);
+    }
+
     return (
         <div>
             <Title>Create New Project</Title>
@@ -38,7 +43,7 @@ const NewProject = () => {
             <Link to={'/'}>Back to projects</Link>
             <br/><br/>
 
-            <Button type="primary">
+            <Button type="primary" onClick={handleGenerateProject}>
                 Generate Project    
             </Button>
             <br/>

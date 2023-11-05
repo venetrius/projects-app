@@ -11,6 +11,7 @@ type ProjectContextType = {
     fetchProject: (projectId: number) => void;
     createProject: (project: ProjectForm) => void;
     deleteProject: (projectId: number) => Promise<boolean>;
+    generateProject: () => Promise<ProjectForm | null>;
     updateProject: (projectId: number, project: ProjectForm) => void;
 };
 
@@ -78,7 +79,20 @@ const ProjectProvider: React.FC<ProjecProviderProps> = ({ children }) => {
         }
     }
 
-    const providerValue = useMemo(() => ({ project, deleteProject, fetchProject, createProject, updateProject }), [project]);
+    async function generateProject(): Promise<ProjectForm | null> {
+        const response = await fetch(`${API_URL}/generateProject`, {
+            method: 'POST',
+        });
+        try {
+            const project = await response.json();
+            return project;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
+
+    const providerValue = useMemo(() => ({ project, deleteProject, fetchProject, createProject, generateProject, updateProject }), [project]);
 
     return (
         <ProjectContext.Provider value={providerValue}>
