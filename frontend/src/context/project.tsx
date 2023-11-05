@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useMemo, ReactNode } from 'react';
+import { createContext, useCallback, useContext, useState, useMemo, ReactNode } from 'react';
 import { Project, ProjectForm } from "../types";
 import { API_URL } from "./settings";
 
@@ -18,7 +18,7 @@ const ProjectContext = createContext<ProjectContextType | null>(null);
 const ProjectProvider: React.FC<ProjecProviderProps> = ({ children }) => {
     const [project, setProject] = useState<Project | null>(null);
 
-    async function fetchProject(projectId: number): Promise<void> {
+    const fetchProject = useCallback(async (projectId: number): Promise<void> => {
         const response = await fetch(`${API_URL}/projects/${projectId}`);
         try {
             const project = await response.json();
@@ -28,7 +28,7 @@ const ProjectProvider: React.FC<ProjecProviderProps> = ({ children }) => {
             // TODO: Handle error
             console.error(error);
         }
-    }
+    }, []);
 
     async function createProject(project: ProjectForm): Promise<void> {
         const response = await fetch(`${API_URL}/projects`, {
