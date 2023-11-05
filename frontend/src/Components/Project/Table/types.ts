@@ -8,7 +8,7 @@ export const columns: ColumnsType<Project> = [
         key: 'name',
         sorter: {
             multiple: 1
-        }
+        },
     },
     {
         title: 'Description',
@@ -29,6 +29,9 @@ export const columns: ColumnsType<Project> = [
         title: 'Is Active',
         dataIndex: 'is_active',
         key: 'is_active',
+        render: (props: any) => {
+            return props.toString()
+        }
     },
     {
         title: 'Created At',
