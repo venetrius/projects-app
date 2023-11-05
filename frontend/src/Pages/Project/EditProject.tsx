@@ -3,7 +3,7 @@ import { Form, Input, Button } from 'antd';
 import Select from "antd/es/select";
 import { ProjectForm } from '../../types';
 import { useProject } from '../../context/project';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Typography } from 'antd';
 
 const { Title } = Typography;
@@ -35,6 +35,7 @@ const EditProject = () => {
     return (
         <>
             <Title>Edit Project</Title>
+            <Link to={'/'}>Back to projects</Link>
             <Form
                 form={form}
                 name="editProject"

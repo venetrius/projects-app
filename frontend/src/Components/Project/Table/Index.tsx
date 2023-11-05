@@ -2,8 +2,9 @@ import { Button, Table } from 'antd';
 import { useProjectList } from '../../../context/projectList';
 import { useProject } from '../../../context/project';
 import { useEffect } from 'react';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { columns } from './types';
+import { Link } from 'react-router-dom';
 
 const ProjectTable: React.FC = () => {
     const { projects, fetchProjects, pagination } = useProjectList();
@@ -27,11 +28,20 @@ const ProjectTable: React.FC = () => {
         title: 'Actions',
         key: 'actions',
         render: (props: any) => (
-            <Button
-                type="text"
-                icon={<DeleteOutlined />}
-                onClick={ () => handleDelete(props.id) }
-            />
+            <>
+                <Button
+                    type="text"
+                    icon={<DeleteOutlined />}
+                    onClick={() => handleDelete(props.id)}
+                />
+                <Link to={`/projects/${props.id}`}>
+                    <Button
+                        type="text"
+                        icon={<EyeOutlined />}
+                    />
+                </Link>
+            </>
+
         ),
     };
 
