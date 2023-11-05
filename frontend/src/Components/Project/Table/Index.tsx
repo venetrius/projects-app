@@ -1,11 +1,13 @@
 import { Button, Table } from 'antd';
 import { useProjectList } from '../../../context/projectList';
+import { useProject } from '../../../context/project';
 import { useEffect } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
 import { columns } from './types';
 
 const ProjectTable: React.FC = () => {
     const { projects, fetchProjects, pagination } = useProjectList();
+    const { deleteProject } = useProject();
     const { current, pageSize } = pagination;
 
     useEffect(() => {
@@ -16,14 +18,19 @@ const ProjectTable: React.FC = () => {
         fetchProjects({ page: params.current, pageSize: params.pageSize });
     };
 
+    const handleDelete = async (projectId: number) => {
+        await deleteProject(projectId);
+        fetchProjects({ page: current, pageSize });
+    };
+
     const actions = {
         title: 'Actions',
         key: 'actions',
-        render: () => (
+        render: (props: any) => (
             <Button
                 type="text"
                 icon={<DeleteOutlined />}
-                onClick={() => alert("deleting record")}
+                onClick={ () => handleDelete(props.id) }
             />
         ),
     };

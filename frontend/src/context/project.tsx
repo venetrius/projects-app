@@ -8,9 +8,10 @@ type ProjecProviderProps = {
 
 type ProjectContextType = {
     project: Project | null;
-    fetchProject: (projectId : number) => void;
+    fetchProject: (projectId: number) => void;
     createProject: (project: ProjectForm) => void;
-  };
+    deleteProject: (projectId: number) => Promise<boolean>;
+};
 
 const ProjectContext = createContext<ProjectContextType | null>(null);
 
@@ -46,7 +47,21 @@ const ProjectProvider: React.FC<ProjecProviderProps> = ({ children }) => {
         }
     }
 
-    const providerValue = useMemo(() => ({ project, fetchProject, createProject }), [project]);
+    async function deleteProject(projectId: number): Promise<boolean> {
+        const response = await fetch(`${API_URL}/projects/${projectId}`, {
+            method: 'DELETE',
+        });
+        try {
+            const project = await response.json();
+            setProject(project);
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
+    const providerValue = useMemo(() => ({ project, deleteProject, fetchProject, createProject }), [project]);
 
     return (
         <ProjectContext.Provider value={providerValue}>
