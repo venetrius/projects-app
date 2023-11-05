@@ -6,6 +6,7 @@ import Home from './Pages/Home';
 import EditProject from './Pages/Project/EditProject';
 import NewProject from './Pages/Project/NewProject';
 import { Col, Row } from 'antd';
+import UserList from './Pages/User/UserList';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/projects/new" element={<NewProject />} />
                 <Route path="/projects/:id" element={<EditProject />} />
                 <Route path="/" element={<Home />} />
+                <Route path="/users" element={<UserList />} />
                 <Route path="*" element={<h1>Not Found</h1>} />
               </Routes>
             </Router>
