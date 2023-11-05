@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useMemo, ReactNode } from 'react';
+import { createContext, useCallback, useContext, useState, useMemo, ReactNode } from 'react';
 import { Project } from "../types";
 import { API_URL } from "./settings";
 
@@ -16,7 +16,7 @@ const ProjectListContext = createContext<ProjectListContextType | null>(null);
 const ProjectListProvider: React.FC<ProjectListProviderProps> = ({ children }) => {
     const [projects, setProjects] = useState<Project[]>([]);
 
-    async function fetchProjects(): Promise<void> {
+    const fetchProjects = useCallback(async (): Promise<void> => {
         const response = await fetch(`${API_URL}/projects`);
         try {
             const projects = await response.json();
@@ -25,7 +25,8 @@ const ProjectListProvider: React.FC<ProjectListProviderProps> = ({ children }) =
             // TODO: Handle error
             console.error(error);
         }
-    }
+    }, []);
+
     const providerValue = useMemo(() => ({ projects, fetchProjects }), [projects]);
 
     return (
