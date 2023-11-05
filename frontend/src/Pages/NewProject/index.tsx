@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import Select from "antd/es/select";
 import { ProjectForm } from '../../types';
+import { useProject } from '../../context/project';
 
 const NewProject = () => {
     const [form] = Form.useForm();
+    const { createProject } = useProject();
     const [project, setProject] = useState<ProjectForm>({
         name: '',
         description: '',
@@ -20,6 +22,8 @@ const NewProject = () => {
             technologies: values.technologies.map((tech: any) => tech.value),
         };
         setProject(newProject);
+        createProject(newProject);
+        // TODO handle error
         form.resetFields();
     };
 
