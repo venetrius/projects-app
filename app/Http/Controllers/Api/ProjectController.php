@@ -13,4 +13,12 @@ class ProjectController extends Controller
         $projects = Project::all();
         return response()->json($projects);
     }
+
+    public function store(Request $request)
+    {
+        throw new \Exception('test - not implemented');
+        // TODO set isActive and user to default values for now
+        $project = Project::create($request->all());
+        return response()->json($project);
+    }
 }
