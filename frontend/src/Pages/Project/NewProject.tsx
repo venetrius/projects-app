@@ -99,7 +99,7 @@ const NewProject = () => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" id={"create_button"}>
                         Create Project
                     </Button>
                 </Form.Item>

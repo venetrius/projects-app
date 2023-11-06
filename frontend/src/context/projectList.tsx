@@ -43,7 +43,7 @@ const ProjectListContext = createContext<ProjectListContextType | null>(null);
 const ProjectListProvider: React.FC<ProjectListProviderProps> = ({ children }) => {
   const [state, setState] = useState<ProjectListState>({
     projects: [],
-    pagination: { current: 1, pageSize: 3, total: 0 },
+    pagination: { current: 1, pageSize: 10, total: 0 },
     sorters: [],
   });
 
