@@ -96,7 +96,7 @@ class ProjectController extends Controller
         $rules = [
             'name' => 'required|max:255|unique:projects',
             'description' => 'required|max:2048',
-            'technologies' => 'required|array',
+            'technologies' => 'array',
             'expected_length' => 'required|min:3|max:255',
         ];
 
