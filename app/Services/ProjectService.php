@@ -4,13 +4,14 @@ namespace App\Services;
 
 use App\Models\Project;
 use Illuminate\Support\Facades\Log;
+use App\Contracts\OpenAiClientInterface;
 
 class ProjectService
 {
 
     protected $openAiClient;
 
-    public function __construct($openAiClient)
+    public function __construct(OpenAiClientInterface $openAiClient)
     {
         $this->openAiClient = $openAiClient;
     }

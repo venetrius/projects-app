@@ -1,5 +1,6 @@
 <?php
 
+use App\Contracts\OpenAiClientInterface;
 use App\Models\Project;
 use Tests\TestCase;
 use App\Services\ProjectService;
@@ -21,22 +22,26 @@ class ProjectServiceTest extends TestCase
     public function testGenerate()
     {
         // Arrange
-        $mockedClient = m::mock('OpenAiInterface');
-        $mockedClient->shouldReceive('completions')->andReturnSelf();
-        $mockedClient->shouldReceive('create')->andReturn([
+        $mockedResponse = [
             'choices' => [
-                ['text' => json_encode([
-                    'name' => 'Test Project',
-                    'description' => 'This is a test project description.',
-                    'technologies' => ['PHP', 'Laravel'],
-                    'expected_length' => '3 months'
-                ])]
+                [
+                    'text' => json_encode([
+                        'name' => 'Test Project',
+                        'description' => 'This is a test project description.',
+                        'technologies' => ['PHP', 'Laravel'],
+                        'expected_length' => '3 months'
+                    ])
+                ]
             ]
-        ]);
+        ];
 
+        $mockedClient = m::mock(OpenAiClientInterface::class);
+        $mockedClient->shouldReceive('completions')->andReturnSelf();
+        $mockedClient->shouldReceive('create')->andReturn($mockedResponse);
+    
         $service = new ProjectService($mockedClient);
 
-    
+
         // Act
         $project = $service->generate();
 

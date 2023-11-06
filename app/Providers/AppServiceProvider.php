@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\Services\ProjectService;
 use Illuminate\Support\ServiceProvider;
+use App\Contracts\OpenAiClientInterface;
+use App\Services\OpenAiClientWrapper;
 use OpenAI;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,14 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind('OpenAiClient', function ($app) {
+        $this->app->bind(OpenAiClientInterface::class, function ($app) {
             $yourApiKey = getenv('OPEN_AI_KEY');
-            return OpenAI::client($yourApiKey);
+            $client = OpenAI::client($yourApiKey);
+            return new OpenAiClientWrapper($client);
         });
-
-        $this->app->when(ProjectService::class)
-            ->needs('$openAiClient')
-            ->give('OpenAiClient');
     }
 
     /**
