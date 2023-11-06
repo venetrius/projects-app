@@ -25,7 +25,7 @@ const EditProject = () => {
             name: values.name,
             description: values.description,
             expected_length: values.expected_length,
-            technologies: values.technologies.map((tech: any) => tech.value),
+            technologies: values.technologies?.map((tech: any) => tech.value),
         };
 
         updateProject(projectId, updatedProject);
