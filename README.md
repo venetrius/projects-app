@@ -1,66 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project Management API & Frontend App - README
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introduction
+This project consists of a backend API and a frontend application that work together to manage projects and users. The backend API is built with Laravel, offering endpoints for CRUD operations on projects, while the frontend is a React application that provides a user interface for interacting with the backend.
 
-## About Laravel
+## Backend - Laravel API
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Requirements
+- PHP >= 7.3
+- Composer
+- Laravel 8.x
+- MySQL or compatible database system
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Setup
+1. Clone the repository to your local machine.
+2. Navigate to the project directory and install dependencies with `composer install`.
+3. Copy `.env.example` to `.env` and configure your database settings.
+4. Run `php artisan key:generate` to generate an app key.
+5. Run `php artisan migrate` to create the database schema.
+6. Optionally, run `php artisan db:seed` to populate the database with initial data.
+7. Serve the API with `php artisan serve`.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### API Endpoints
+- `GET /api/projects`: List all projects with optional sorting and pagination.
+- `POST /api/projects`: Create a new project.
+- `PUT /api/projects/{project}`: Update an existing project.
+- `DELETE /api/projects/{project}`: Delete a project.
+- `GET /api/projects/{projectId}`: Retrieve a single project.
+- `POST /api/generateProject`: Generate a new project using predefined templates.
+- `GET /api/users`: List all users.
 
-## Learning Laravel
+### Controllers
+- `ProjectController`: Handles project-related requests.
+- `UserController`: Manages user-related operations.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Frontend - React App
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Requirements
+- Node.js
+- npm or Yarn
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Setup
+1. Navigate to the frontend project directory.
+2. Install dependencies with `npm install` or `yarn`.
+3. Run the application with `npm start` or `yarn start`.
 
-## Laravel Sponsors
+### Pages and Routes
+- `/`: Home page listing all projects.
+- `/projects/new`: Form to create a new project.
+- `/projects/:id`: Form to edit an existing project.
+- `/users`: List all users.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Components
+- `Home`: Displays the list of projects and navigation options.
+- `EditProject`: Provides a form to edit a project.
+- `NewProject`: Form to submit a new project.
+- `UserList`: Displays a list of users.
 
-### Premium Partners
+### Context Providers
+- `ProjectListProvider`: Provides project list state management.
+- `ProjectProvider`: Manages the state for individual projects.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Testing
+- Run `php artisan test` to execute backend tests.
+- Run `npm test` within the frontend directory to execute frontend tests.
 
-## Contributing
+## Deployment
+- Configure a web server like Nginx or Apache to serve the API.
+- Build the frontend with `npm run build` and serve it with a static file server or integrate it into the web server.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Notes
+- Authentication endpoints and middleware are defined but require further configuration.
+- Frontend routing is managed with React Router.
+- State management in the frontend uses React Context API.
+- API uses Laravel's Eloquent ORM for database operations and query building.
 
-## Code of Conduct
+## Contribution
+- Ensure to follow PSR standards for PHP code.
+- Use React functional components and hooks.
+- Write unit tests for new features and endpoints.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+For more details, refer to the inline documentation within the codebase.
