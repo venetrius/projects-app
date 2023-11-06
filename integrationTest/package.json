@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.2.0",
     "chromedriver": "^119.0.0",
-    "faker": "^6.6.6",
     "selenium-webdriver": "^4.15.0"
   }
 }
